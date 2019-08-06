@@ -1,7 +1,8 @@
 #!/bin/bash 
 function ensure_folder () {
   local DIRECTORY=$1
-  mkdir $DIRECTORY
+  rm -rf $DIRECTORY 2> /dev/null
+  mkdir $DIRECTORY 2> /dev/null
 }
 
 function get_binaries () {
@@ -13,8 +14,8 @@ function get_binaries () {
 
 function move_binaries () {
   local DIRECTORY=$1
-  mv bootcode.bin ${DIRECTORY}/
-  mv start.elf ${DIRECTORY}/
+  mv bootcode.bin ${DIRECTORY}
+  mv start.elf ${DIRECTORY}
 }
 
 function main () {
