@@ -17,14 +17,24 @@ RUN apt-get -y install gcc-aarch64-linux-gnu
 RUN apt-get -y install gcc-arm-linux-gnueabi
 RUN apt-get -y install device-tree-compiler
 
-## U-Boot ##
+# U-Boot #
 RUN curl -o /x/u-boot-2018.09.tar.bz2 \
             ftp://ftp.denx.de/pub/u-boot/u-boot-2018.09.tar.bz2
 RUN tar -xjf /x/u-boot-2018.09.tar.bz2 -C /x/
 RUN rm /x/u-boot-2018.09.tar.bz2
 
-#### Scripts ####
-RUN mkdir -p /x/scripts/
+#### SoC Scripts ####
+RUN mkdir -p /x/scripts/soc
+
+# Raspberry Pi #
+RUN mkdir -p /x/scripts/soc/raspberry_pi/build/uboot/
+RUN mkdir -p /x/scripts/soc/raspberry_pi/emmc/
+COPY scripts/soc/raspberry_pi/build/uboot/*.sh /x/scripts/soc/raspberry_pi/build/uboot/
+COPY scripts/soc/raspberry_pi/emmc/*.sh /x/scripts/soc/raspberry_pi/emmc/
+RUN chmod 0775 /x/scripts/soc/raspberry_pi/build/uboot/*.sh
+RUN chmod 0775 /x/scripts/soc/raspberry_pi/emmc/*.sh
+
+#### System Scripts ####
 COPY scripts/container/run.sh /x/scripts/run.sh
 RUN chmod 0775 /x/scripts/run.sh
 
