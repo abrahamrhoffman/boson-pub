@@ -53,10 +53,11 @@ def main():
                           help="Display output (default False)")
     args = parser.parse_args()
     if args.verbose:
-        raspberrypi = RaspberryPi(args.drive, args.arch, args.verbose)
+        raspberrypi = RaspberryPi(args.drive, args.arch,
+                                  args.container, args.verbose)
         raspberrypi.run()
     else:
-        raspberrypi = RaspberryPi(args.drive, args.arch)
+        raspberrypi = RaspberryPi(args.drive, args.arch, args.container)
         raspberrypi.run()
 
 if __name__ == ("__main__"):
