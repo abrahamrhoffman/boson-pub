@@ -30,7 +30,7 @@ function format () {
 
 function main () {
   verify_root
-  verify_drive
+  verify_drive $1
   wipe $1
 }
 
