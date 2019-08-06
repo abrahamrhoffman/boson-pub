@@ -24,7 +24,7 @@ class RaspberryPi(object):
         print("#######################")
         print("# Boson : Build uBoot #")
         print("#######################")
-        sys.stdout.write("Building uboot [{}bit] : ".format(self.arch))
+        sys.stdout.write("Building uboot [{}bit]... ".format(self.arch))
         sys.stdout.flush()
         cmd = ("docker exec -ti boson-pub " + \
                "bash /x/scripts/soc/raspberry_pi/build/uboot/" + \
@@ -36,20 +36,23 @@ class RaspberryPi(object):
         print("Done")
 
     def get_binaries(self):
-        cmd = ("bash `pwd`/../docker/scripts/raspberry_pi/emmc/" + \
+        cmd = ("bash `pwd`/../docker/scripts/soc/raspberry_pi/emmc/" + \
                "get_binaries.sh")
-        subprocess.call(cmd, shell=True)
+        if self.verbose:
+            subprocess.call(cmd, stdout=self.devnull, shell=True)
+        else:
+            subprocess.call(cmd, shell=True)
 
     def format(self):
-        cmd = ("bash `pwd`/../docker/scripts/raspberry_pi/emmc/format.sh ")
+        cmd = ("bash `pwd`/../docker/scripts/soc/raspberry_pi/emmc/format.sh ")
         cmd += ("{}".format(self.drive))
         subprocess.call(cmd, shell=True)
 
     def run(self):
         self.start_bootstrap()
         self.build_uboot()
+        self.get_binaries()
         #self.format()
-        #self.get_binaries()
 
 
 def main():

@@ -1,9 +1,9 @@
 #!/bin/bash
 
 function user_feedback () {
-  echo "############################"
-  echo "# Boson : eMMC Format Tool #"
-  echo "############################"
+  echo "########################"
+  echo "# Boson : Prepare eMMC #"
+  echo "########################"
 }
 
 function verify_root () {
@@ -26,14 +26,14 @@ function verify_drive () {
 
 function unmount_drive () {
   local DRIVE=$1
-  echo -n "Unmount [${DRIVE}]           : "
+  echo -n "Unmount [${DRIVE}]... "
   umount $DRIVE > /dev/null
   echo "Done"
 }
 
 function wipe () {
   local DRIVE=$1
-  echo -n "Wipe [${DRIVE}]              : "
+  echo -n "Wipe [${DRIVE}]... "
   dd if=/dev/urandom of="$DRIVE" bs=1M count=1 &> /dev/null
   echo "Done"
 }
@@ -41,18 +41,18 @@ function wipe () {
 function create () {
   local DRIVE=$1
 
-  echo -n "Label [${DRIVE}] 'mdos'      : "
+  echo -n "Label [${DRIVE}] 'mdos'... "
   parted -s "${DRIVE}" mklabel msdos
   echo "Done"
 
-  echo -n "Partition [${DRIVE}] 'fat32' : "
+  echo -n "Partition [${DRIVE}] 'fat32'... "
   parted -a optimal -s $DRIVE mkpart primary fat32 0% 100%
   echo "Done"
 }
 
 function filesystem () {
   local DRIVE=$1
-  echo -n "Create [${DRIVE}] filesystem : "
+  echo -n "Create [${DRIVE}] filesystem... "
   mkfs.vfat ${DRIVE}1 > /dev/null
   echo "Done"
 }
@@ -60,7 +60,7 @@ function filesystem () {
 function mount_drive () {
   local DRIVE=$1
   mkdir `pwd`/mnt > /dev/null
-  echo -n "Mount [${DRIVE}1]            : "
+  echo -n "Mount [${DRIVE}1]... "
   mount ${DRIVE}1 `pwd`/mnt
   echo "Done"
 }
@@ -70,7 +70,6 @@ function user_result () {
   echo "######### Results #########"
   fdisk -l $DRIVE
   echo "Mounted at `pwd`/mnt"
-  echo "######### Results #########"
 }
 
 function main () {
@@ -83,7 +82,7 @@ function main () {
   create $DRIVE
   filesystem $DRIVE
   mount_drive $DRIVE
-  user_result $DRIVE
+  unmount_drive $DRIVE
 }
 
 main $1
