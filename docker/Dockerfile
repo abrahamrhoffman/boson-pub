@@ -16,6 +16,9 @@ RUN apt-get -y install flex
 RUN apt-get -y install gcc-aarch64-linux-gnu
 RUN apt-get -y install gcc-arm-linux-gnueabi
 RUN apt-get -y install device-tree-compiler
+# Clean up #
+RUN apt-get -y clean
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # U-Boot #
 RUN curl -o /x/u-boot-2018.09.tar.bz2 \

@@ -17,9 +17,14 @@ class RaspberryPi(object):
         self.arch = arch
 
     def start_bootstrap(self):
-        name = ("abehoffman/boson-pub:{}".format(self.container))
         btstrp = bootstrap.BootStrap(self.container)
         btstrp.run()
+
+    def build(self):
+        cmd = ("docker exec -ti boson-pub " + \
+               "bash /x/scripts/soc/raspberry_pi/build/uboot/" + \
+               "build_{}bit.sh /x/u-boot-2018.09".format(self.arch))
+        subprocess.call(cmd, shell=True)
 
     def format(self):
         cmd = ("bash `pwd`/../docker/scripts/raspberry_pi/emmc/format.sh ")
@@ -33,6 +38,7 @@ class RaspberryPi(object):
 
     def run(self):
         self.start_bootstrap()
+        self.build()
         #self.format()
         #self.get_binaries()
 
