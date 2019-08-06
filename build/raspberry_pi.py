@@ -37,8 +37,9 @@ class RaspberryPi(object):
         print("Done")
 
     def get_binaries(self):
+        cmd = ("mkdir `pwd`/files")
         cmd = ("bash `pwd`/../docker/scripts/soc/raspberry_pi/emmc/" + \
-               "get_binaries.sh")
+               "get_binaries.sh `pwd`/files")
         if self.verbose:
             subprocess.call(cmd, stderr=self.devnull, shell=True)
         else:
