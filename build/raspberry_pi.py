@@ -12,6 +12,9 @@ class RaspberryPi(object):
         self.verbose = verbose
         self.drive = local_drive
 
+    def bootstrap(self):
+        pass
+
     def format(self):
         cmd = ("bash `pwd`/../docker/scripts/raspberry_pi/emmc/format.sh ")
         cmd += ("{}".format(self.drive))
