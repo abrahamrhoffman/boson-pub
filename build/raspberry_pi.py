@@ -24,16 +24,19 @@ class RaspberryPi(object):
         cmd = ("docker exec -ti boson-pub " + \
                "bash /x/scripts/soc/raspberry_pi/build/uboot/" + \
                "build_{}bit.sh /x/u-boot-2018.09".format(self.arch))
+        if self.verbose:
+            subprocess.call(cmd, shell=True)
+        else:
+            subprocess.call(cmd, stdout=self.devnull, shell=True)
+
+    def get_binaries(self):
+        cmd = ("bash `pwd`/../docker/scripts/raspberry_pi/emmc/" + \
+               "get_binaries.sh")
         subprocess.call(cmd, shell=True)
 
     def format(self):
         cmd = ("bash `pwd`/../docker/scripts/raspberry_pi/emmc/format.sh ")
         cmd += ("{}".format(self.drive))
-        subprocess.call(cmd, shell=True)
-
-    def get_binaries(self):
-        cmd = ("bash `pwd`/../docker/scripts/raspberry_pi/emmc/" + \
-               "get_binaries.sh")
         subprocess.call(cmd, shell=True)
 
     def run(self):
