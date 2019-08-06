@@ -24,9 +24,8 @@ RUN tar -xjf /x/u-boot-2018.09.tar.bz2 -C /x/
 RUN rm /x/u-boot-2018.09.tar.bz2
 
 #### Scripts ####
-RUN mkdir -p /x/scripts
-COPY scripts/container/*.sh /x/scripts/
-RUN chmod 0775 /x/scripts/*.sh
+COPY scripts/ /x/
+RUN chmod 0775 /x/scripts/container/run.sh
 
 #### INIT ####
-CMD ["/bin/bash", "/x/scripts/run.sh"]
+CMD ["/bin/bash", "/x/scripts/container/run.sh"]
