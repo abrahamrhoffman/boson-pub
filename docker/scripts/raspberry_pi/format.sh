@@ -44,7 +44,7 @@ function create () {
 }
 
 function user_result () {
-  local $DRIVE=$1
+  local DRIVE=$1
   echo "######### Results ########"
   fdisk -l $DRIVE
 }
