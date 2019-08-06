@@ -18,6 +18,12 @@ class RaspberryPi(object):
         self.verbose = verbose
         self.arch = arch
 
+    def prepare_folder(self):
+        cmd = ("rm -rf {} 2> /dev/null".format(self.build_folder))
+        subprocess.call(cmd, shell=True)
+        cmd = ("mkdir {} 2> /dev/null".format(self.build_folder))
+        subprocess.call(cmd, shell=True)
+
     def start_bootstrap(self):
         btstrp = bootstrap.BootStrap(self.container)
         btstrp.run()
@@ -46,9 +52,6 @@ class RaspberryPi(object):
         sys.stdout.write("Gathering files... ".format(self.arch))
         sys.stdout.flush()
 
-        cmd = ("mkdir {} 2> /dev/null".format(self.build_folder))
-        subprocess.call(cmd, shell=True)
-
         cmd = ("bash `pwd`/../docker/scripts/soc/raspberry_pi/emmc/" + \
                "get_binaries.sh {}".format(self.build_folder))
         if self.verbose:
@@ -61,7 +64,7 @@ class RaspberryPi(object):
     def get_build_files(self):
         binFiles = ["u-boot.bin"]
         for ele in binFiles:
-            cmd = ("docker cp boson-pub:/x/{}/{} {}"
+            cmd = ("sudo docker cp boson-pub:/x/{}/{} {}"
                    .format(self.uboot_version, ele, self.build_folder))
             subprocess.call(cmd, shell=True)
 
@@ -71,10 +74,11 @@ class RaspberryPi(object):
         subprocess.call(cmd, shell=True)
 
     def run(self):
+        self.prepare_folder()
         self.start_bootstrap()
         self.build_uboot()
-        self.get_build_files()
         self.get_binaries()
+        self.get_build_files()
         #self.format()
 
 
