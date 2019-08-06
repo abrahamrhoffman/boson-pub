@@ -1,7 +1,9 @@
 #!/bin/bash 
 function get_binaries () {
-  wget https://github.com/raspberrypi/firmware/raw/master/boot/bootcode.bin
-  wget https://github.com/raspberrypi/firmware/raw/master/boot/start.elf
+  wget https://github.com/raspberrypi/firmware/raw/master/boot/bootcode.bin \
+    2> /dev/null
+  wget https://github.com/raspberrypi/firmware/raw/master/boot/start.elf \
+    2> /dev/null
 }
 
 function move_binaries () {
