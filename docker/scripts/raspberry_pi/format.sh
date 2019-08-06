@@ -26,23 +26,22 @@ function verify_drive () {
 
 function wipe () {
   local DRIVE=$1
-  echo -n "Wiping $DRIVE : "
+  echo -n "Wipe $DRIVE : "
   dd if=/dev/urandom of="$DRIVE" bs=1M count=1 &> /dev/null
   echo "Done"
 }
 
 function create () {
   local DRIVE=$1
-  local SIZE=`fdisk -l $DRIVE | awk '/sectors/' | grep "Disk" | awk '{print $3, $4}' | sed 's/\,//g'`
 
-  echo -n "Setting $DRIVE label 'msdos' : "
+  echo -n "Set $DRIVE label 'msdos' : "
   parted -s "${DRIVE}" mklabel msdos
   echo "Done"
 
-  echo -n "Creating partition ${DRIVE}1 : "
+  echo -n "Create partition ${DRIVE}1 : "
+  parted -a optimal -s $DRIVE mkpart primary fat32 0% 100%
   parted -s $DRIVE -a optimal primary 0% ${SIZE}
   echo "Done"
-
 }
 
 function main () {
