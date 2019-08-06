@@ -27,6 +27,7 @@ class RaspberryPi(object):
 
     def run(self):
         self.format()
+        self.get_binaries()
 
 def main():
     parser = argparse.ArgumentParser()
