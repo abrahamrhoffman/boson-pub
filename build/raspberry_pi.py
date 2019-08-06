@@ -11,6 +11,8 @@ class RaspberryPi(object):
 
     def __init__(self, local_drive, arch, container, verbose=False):
         self.devnull = open(os.devnull, "w")
+        self.uboot_version = ("u-boot-2018.09")
+        self.build_folder = ("files")
         self.container = container
         self.drive = local_drive
         self.verbose = verbose
@@ -29,7 +31,7 @@ class RaspberryPi(object):
         sys.stdout.flush()
         cmd = ("docker exec -ti boson-pub " + \
                "bash /x/scripts/soc/raspberry_pi/build/uboot/" + \
-               "build_{}bit.sh /x/u-boot-2018.09".format(self.arch))
+               "build_{}bit.sh /x/{}".format(self.arch, self.uboot_version))
         if self.verbose:
             subprocess.call(cmd, shell=True)
         else:
@@ -38,10 +40,17 @@ class RaspberryPi(object):
 
     def get_binaries(self):
         cmd = ("bash `pwd`/../docker/scripts/soc/raspberry_pi/emmc/" + \
-               "get_binaries.sh `pwd`/files/")
+               "get_binaries.sh `pwd`/{}/".format(self.build_folder))
         if self.verbose:
             subprocess.call(cmd, stderr=self.devnull, shell=True)
         else:
+            subprocess.call(cmd, shell=True)
+
+    def get_build_files(self):
+        binFiles = ["u-boot.bin"]
+        for ele in binFiles:
+            cmd = ("docker cp boson-pub:/x/{}/{} `pwd`/{}"
+                   .format(self.uboot_version, ele, self.build_folder))
             subprocess.call(cmd, shell=True)
 
     def format(self):
@@ -52,6 +61,7 @@ class RaspberryPi(object):
     def run(self):
         self.start_bootstrap()
         self.build_uboot()
+        self.get_build_files()
         self.get_binaries()
         #self.format()
 
