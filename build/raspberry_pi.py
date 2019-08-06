@@ -50,7 +50,7 @@ class RaspberryPi(object):
         subprocess.call(cmd, shell=True)
 
         cmd = ("bash `pwd`/../docker/scripts/soc/raspberry_pi/emmc/" + \
-               "get_binaries.sh `pwd`/{}/".format(self.build_folder))
+               "get_binaries.sh {}".format(self.build_folder))
         if self.verbose:
             subprocess.call(cmd, stderr=self.devnull, shell=True)
         else:
@@ -61,7 +61,7 @@ class RaspberryPi(object):
     def get_build_files(self):
         binFiles = ["u-boot.bin"]
         for ele in binFiles:
-            cmd = ("docker cp boson-pub:/x/{}/{} `pwd`/{}/"
+            cmd = ("docker cp boson-pub:/x/{}/{} {}"
                    .format(self.uboot_version, ele, self.build_folder))
             subprocess.call(cmd, shell=True)
 
