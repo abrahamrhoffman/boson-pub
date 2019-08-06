@@ -40,7 +40,6 @@ function create () {
 
   echo -n "Create partition ${DRIVE}1 : "
   parted -a optimal -s $DRIVE mkpart primary fat32 0% 100%
-  parted -s $DRIVE -a optimal primary 0% ${SIZE}
   echo "Done"
 }
 
