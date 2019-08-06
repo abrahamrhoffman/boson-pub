@@ -24,9 +24,16 @@ function verify_drive () {
   fi
 }
 
+function unmount_drive () {
+  local DRIVE=$1
+  echo -n "Unmount [${DRIVE}]           : "
+  umount $DRIVE > /dev/null
+  echo "Done"
+}
+
 function wipe () {
   local DRIVE=$1
-  echo -n "Wipe [${DRIVE}]      : "
+  echo -n "Wipe [${DRIVE}]              : "
   dd if=/dev/urandom of="$DRIVE" bs=1M count=1 &> /dev/null
   echo "Done"
 }
@@ -34,12 +41,27 @@ function wipe () {
 function create () {
   local DRIVE=$1
 
-  echo -n "Label [${DRIVE}]     : "
+  echo -n "Label [${DRIVE}] 'mdos'      : "
   parted -s "${DRIVE}" mklabel msdos
   echo "Done"
 
-  echo -n "Partition [${DRIVE}] : "
+  echo -n "Partition [${DRIVE}] 'fat32' : "
   parted -a optimal -s $DRIVE mkpart primary fat32 0% 100%
+  echo "Done"
+}
+
+function filesystem () {
+  local DRIVE=$1
+  echo -n "Create [${DRIVE}] filesystem : "
+  mkfs.vfat ${DRIVE}1 > /dev/null
+  echo "Done"
+}
+
+function mount_drive () {
+  local DRIVE=$1
+  mkdir `pwd`/mnt > /dev/null
+  echo -n "Mount [${DRIVE}1]            : "
+  mount ${DRIVE}1 `pwd`/mnt
   echo "Done"
 }
 
@@ -47,6 +69,8 @@ function user_result () {
   local DRIVE=$1
   echo "######### Results #########"
   fdisk -l $DRIVE
+  echo "Mounted at `pwd`/mnt"
+  echo "######### Results #########"
 }
 
 function main () {
@@ -54,8 +78,11 @@ function main () {
   user_feedback
   verify_root
   verify_drive $DRIVE
+  unmount_drive
   wipe $DRIVE
   create $DRIVE
+  filesystem $DRIVE
+  mount_drive
   user_result $DRIVE
 }
 
