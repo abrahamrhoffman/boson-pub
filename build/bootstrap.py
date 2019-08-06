@@ -15,9 +15,9 @@ class BootStrap(object):
         self.init_feedback()
 
     def init_feedback(self):
-        print("##########################")
-        print("#  Boson Build Pipeline  #")
-        print("##########################")
+        print("#############################")
+        print("# Boson : Container Builder #")
+        print("#############################")
 
     def stop(self):
         sys.stdout.write("Stopping Container... ")
