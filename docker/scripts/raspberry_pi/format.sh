@@ -26,7 +26,7 @@ function verify_drive () {
 
 function wipe () {
   local DRIVE=$1
-  echo -n "Wipe $DRIVE : "
+  echo -n "Wipe [${DRIVE}]      : "
   dd if=/dev/urandom of="$DRIVE" bs=1M count=1 &> /dev/null
   echo "Done"
 }
@@ -34,11 +34,11 @@ function wipe () {
 function create () {
   local DRIVE=$1
 
-  echo -n "Set $DRIVE label 'msdos' : "
+  echo -n "Label [${DRIVE}]     : "
   parted -s "${DRIVE}" mklabel msdos
   echo "Done"
 
-  echo -n "Create partition ${DRIVE}1 : "
+  echo -n "Partition [${DRIVE}] : "
   parted -a optimal -s $DRIVE mkpart primary fat32 0% 100%
   echo "Done"
 }
