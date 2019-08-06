@@ -20,7 +20,12 @@ class RaspberryPi(object):
         btstrp = bootstrap.BootStrap(self.container)
         btstrp.run()
 
-    def build(self):
+    def build_uboot(self):
+        print("#######################")
+        print("# Boson : Build uBoot #")
+        print("#######################")
+        sys.stdout.write("Building uboot [{}bit] : ".format(self.arch))
+        sys.stdout.flush()
         cmd = ("docker exec -ti boson-pub " + \
                "bash /x/scripts/soc/raspberry_pi/build/uboot/" + \
                "build_{}bit.sh /x/u-boot-2018.09".format(self.arch))
@@ -28,6 +33,7 @@ class RaspberryPi(object):
             subprocess.call(cmd, shell=True)
         else:
             subprocess.call(cmd, stdout=self.devnull, shell=True)
+        print("Done")
 
     def get_binaries(self):
         cmd = ("bash `pwd`/../docker/scripts/raspberry_pi/emmc/" + \
