@@ -43,6 +43,12 @@ function create () {
   echo "Done"
 }
 
+function user_result () {
+  local $DRIVE=$1
+  echo "######### Results ########"
+  fdisk -l $DRIVE
+}
+
 function main () {
   local DRIVE=$1
   user_feedback
@@ -50,6 +56,7 @@ function main () {
   verify_drive $DRIVE
   wipe $DRIVE
   create $DRIVE
+  user_result $DRIVE
 }
 
 main $1
