@@ -1,10 +1,16 @@
 #!/bin/bash
 
+function user_feedback () {
+  echo "####################"
+  echo "# Boson: eMMC Tool #"
+  echo "####################"
+}
+
 function verify_root () {
   local USER=`whoami | sed 's/\\n//g'`
   if [[ "$USER" != "root" ]]
   then
-    echo "Must execute as root. Try: sudo"
+    echo "Must execute as root. Try: 'sudo'"
       exit 1
   fi
 }
@@ -13,7 +19,7 @@ function verify_drive () {
   local DRIVE=$1
   if [[ "$DRIVE" == "" ]]
   then
-    echo "Please provide a drive. Example: /dev/sdn"
+    echo "Please provide a drive. Example: '/dev/sdn'"
       exit 1
   fi
 }
@@ -29,6 +35,7 @@ function format () {
 }
 
 function main () {
+  user_feedback
   verify_root
   verify_drive $1
   wipe $1
