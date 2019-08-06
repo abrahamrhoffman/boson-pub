@@ -1,9 +1,9 @@
 #!/bin/bash
 
 function user_feedback () {
-  echo "####################"
-  echo "# Boson: eMMC Tool #"
-  echo "####################"
+  echo "###########################"
+  echo "# Boson: eMMC Format Tool #"
+  echo "###########################"
 }
 
 function verify_root () {

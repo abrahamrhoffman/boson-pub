@@ -25,7 +25,7 @@ RUN rm /x/u-boot-2018.09.tar.bz2
 
 #### Scripts ####
 RUN mkdir -p /x/scripts
-COPY scripts/*.sh /x/scripts/
+COPY scripts/container/*.sh /x/scripts/
 RUN chmod 0775 /x/scripts/*.sh
 
 #### INIT ####
