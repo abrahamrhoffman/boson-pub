@@ -10,7 +10,7 @@ class BootStrap(object):
     def __init__(self, image, verbose=False):
         self.devnull = open(os.devnull, "w")
         self.verbose = verbose
-        self.image = image
+        self.image = ("abehoffman/boson-pub:{}".format(image))
         self.image_name = (self.image.split("/")[-1].split(":")[0])
         self.init_feedback()
 
@@ -103,7 +103,7 @@ def main():
     parser = argparse.ArgumentParser()
     required = parser.add_argument_group('Required arguments')
     required.add_argument("-i", "--image", action="store",
-                          help="Docker image and tag", required=True)
+                          help="Docker image version", required=True)
     required.add_argument("-v", "--verbose", action="store_true",
                           help="Show output (default False)")
     args = parser.parse_args()
