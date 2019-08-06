@@ -7,10 +7,11 @@ import os
 
 class RaspberryPi(object):
 
-    def __init__(self, local_drive, verbose=False):
+    def __init__(self, local_drive, arch, verbose=False):
         self.devnull = open(os.devnull, "w")
         self.verbose = verbose
         self.drive = local_drive
+        self.arch = arch
 
     def bootstrap(self):
         pass
@@ -35,14 +36,17 @@ def main():
     required.add_argument("-d", "--drive", action="store",
                           help="Local drive to format and prepare. " + \
                                "Example: /dev/sdn", required=True)
+    required.add_argument("-a", "--arch", action="store",
+                          help="CPU architecture. Example: 64, 32",
+                          required=True)
     required.add_argument("-v", "--verbose", action="store_true",
                           help="Display output (default False)")
     args = parser.parse_args()
     if args.verbose:
-        raspberrypi = RaspberryPi(args.drive, args.verbose)
+        raspberrypi = RaspberryPi(args.drive, args.arch, args.verbose)
         raspberrypi.run()
     else:
-        raspberrypi = RaspberryPi(args.drive)
+        raspberrypi = RaspberryPi(args.drive, args.arch)
         raspberrypi.run()
 
 if __name__ == ("__main__"):
