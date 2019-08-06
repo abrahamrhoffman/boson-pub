@@ -12,7 +12,7 @@ class RaspberryPi(object):
     def __init__(self, local_drive, arch, container, verbose=False):
         self.devnull = open(os.devnull, "w")
         self.uboot_version = ("u-boot-2018.09")
-        self.build_folder = ("files")
+        self.build_folder = ("`pwd`/files")
         self.container = container
         self.drive = local_drive
         self.verbose = verbose
@@ -37,8 +37,15 @@ class RaspberryPi(object):
         else:
             subprocess.call(cmd, stdout=self.devnull, shell=True)
         print("Done")
+        print("")
 
     def get_binaries(self):
+        print("########################")
+        print("# Boson : Gather Files #")
+        print("########################")
+        sys.stdout.write("Gathering files... ".format(self.arch))
+        sys.stdout.flush()
+
         cmd = ("mkdir {} 2> /dev/null".format(self.build_folder))
         subprocess.call(cmd, shell=True)
 
@@ -48,6 +55,8 @@ class RaspberryPi(object):
             subprocess.call(cmd, stderr=self.devnull, shell=True)
         else:
             subprocess.call(cmd, shell=True)
+        print("Done")
+        print("")
 
     def get_build_files(self):
         binFiles = ["u-boot.bin"]
