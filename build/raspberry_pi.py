@@ -19,6 +19,7 @@ class RaspberryPi(object):
     def start_bootstrap(self):
         btstrp = bootstrap.BootStrap(self.container)
         btstrp.run()
+        print("")
 
     def build_uboot(self):
         print("#######################")
@@ -39,7 +40,7 @@ class RaspberryPi(object):
         cmd = ("bash `pwd`/../docker/scripts/soc/raspberry_pi/emmc/" + \
                "get_binaries.sh")
         if self.verbose:
-            subprocess.call(cmd, stdout=self.devnull, shell=True)
+            subprocess.call(cmd, stderr=self.devnull, shell=True)
         else:
             subprocess.call(cmd, shell=True)
 
