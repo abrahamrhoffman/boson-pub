@@ -30,6 +30,7 @@ class RaspberryPi(object):
         self.format()
         self.get_binaries()
 
+
 def main():
     parser = argparse.ArgumentParser()
     required = parser.add_argument_group('Required arguments')
