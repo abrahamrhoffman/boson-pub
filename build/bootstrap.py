@@ -13,8 +13,6 @@ class BootStrap(object):
         self.image = ("abehoffman/boson-pub:{}".format(image))
         self.image_name = (self.image.split("/")[-1].split(":")[0])
         self.init_feedback()
-        print(self.image)
-        print(self.image_name)
 
     def init_feedback(self):
         print("###########################")
