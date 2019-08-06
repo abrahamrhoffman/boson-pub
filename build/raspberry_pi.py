@@ -15,7 +15,7 @@ class RaspberryPi(object):
     def format(self):
         cmd = ("bash `pwd`/../docker/scripts/raspberry_pi/emmc/format.sh ")
         cmd += ("{}".format(self.drive))
-        subprocess.call(cmd, shell=True)
+        subprocess.call(cmd, stderr=self.devnull, shell=True)
 
     def run(self):
         self.format()
