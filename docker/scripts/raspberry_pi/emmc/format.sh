@@ -78,11 +78,11 @@ function main () {
   user_feedback
   verify_root
   verify_drive $DRIVE
-  unmount_drive
+  unmount_drive $DRIVE
   wipe $DRIVE
   create $DRIVE
   filesystem $DRIVE
-  mount_drive
+  mount_drive $DRIVE
   user_result $DRIVE
 }
 
