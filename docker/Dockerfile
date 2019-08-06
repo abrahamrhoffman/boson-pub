@@ -28,11 +28,9 @@ RUN mkdir -p /x/scripts/soc
 
 # Raspberry Pi #
 RUN mkdir -p /x/scripts/soc/raspberry_pi/build/uboot/
-RUN mkdir -p /x/scripts/soc/raspberry_pi/emmc/
-COPY scripts/soc/raspberry_pi/build/uboot/*.sh /x/scripts/soc/raspberry_pi/build/uboot/
-COPY scripts/soc/raspberry_pi/emmc/*.sh /x/scripts/soc/raspberry_pi/emmc/
+COPY scripts/soc/raspberry_pi/build/uboot/*.sh \
+     /x/scripts/soc/raspberry_pi/build/uboot/
 RUN chmod 0775 /x/scripts/soc/raspberry_pi/build/uboot/*.sh
-RUN chmod 0775 /x/scripts/soc/raspberry_pi/emmc/*.sh
 
 #### System Scripts ####
 COPY scripts/container/run.sh /x/scripts/run.sh
