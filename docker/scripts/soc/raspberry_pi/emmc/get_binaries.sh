@@ -1,4 +1,9 @@
 #!/bin/bash 
+function ensure_folder () {
+  local DIRECTORY=$1
+  mkdir $DIRECTORY
+}
+
 function get_binaries () {
   wget https://github.com/raspberrypi/firmware/raw/master/boot/bootcode.bin \
     2> /dev/null
@@ -8,12 +13,13 @@ function get_binaries () {
 
 function move_binaries () {
   local DIRECTORY=$1
-  mv bootcode.bin $DIRECTORY
-  mv start.elf $DIRECTORY
+  mv bootcode.bin ${DIRECTORY}/
+  mv start.elf ${DIRECTORY}/
 }
 
 function main () {
   local DIRECTORY=$1
+  ensure_folder $DIRECTORY
   get_binaries
   move_binaries $DIRECTORY
 }
