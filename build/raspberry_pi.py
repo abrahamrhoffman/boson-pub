@@ -47,7 +47,7 @@ class RaspberryPi(object):
 
     def run(self):
         self.start_bootstrap()
-        self.build()
+        self.build_uboot()
         #self.format()
         #self.get_binaries()
 
