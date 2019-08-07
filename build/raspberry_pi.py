@@ -68,6 +68,14 @@ class RaspberryPi(object):
                    .format(self.uboot_version, ele, self.build_folder))
             subprocess.call(cmd, shell=True)
 
+    def get_config_files(self):
+        configFiles = ["cmdline.txt", "config.txt"]
+        for ele in configFiles:
+            cmd = ("cp `pwd`/../docker/scripts/soc/raspberry_pi/build" + \
+                   "/uboot/files/{} ".format(ele) + \
+                   "{}".format(self.build_folder))
+            subprocess.call(cmd, shell=True)
+
     def format(self):
         cmd = ("bash `pwd`/../docker/scripts/soc/raspberry_pi/emmc/format.sh ")
         cmd += ("{}".format(self.drive))
@@ -79,6 +87,7 @@ class RaspberryPi(object):
         self.build_uboot()
         self.get_binaries()
         self.get_build_files()
+        self.get_config_files()
         #self.format()
 
 
