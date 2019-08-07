@@ -11,7 +11,7 @@ class RaspberryPi(object):
 
     def __init__(self, arch, container, verbose=False):
         self.devnull = open(os.devnull, "w")
-        self.uboot_version = ("u-boot-2018.09")
+        self.uboot_version = ("u-boot-2019.07")
         self.build_folder = ("`pwd`/files")
         self.container = container
         self.verbose = verbose

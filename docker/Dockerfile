@@ -21,10 +21,10 @@ RUN apt-get -y clean
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # U-Boot #
-RUN curl -o /x/u-boot-2018.09.tar.bz2 \
-            ftp://ftp.denx.de/pub/u-boot/u-boot-2018.09.tar.bz2
-RUN tar -xjf /x/u-boot-2018.09.tar.bz2 -C /x/
-RUN rm /x/u-boot-2018.09.tar.bz2
+RUN curl -o /x/u-boot-2019.07.tar.bz2 \
+            ftp://ftp.denx.de/pub/u-boot/u-boot-2019.07.tar.bz2
+RUN tar -xjf /x/u-boot-2019.07.tar.bz2 -C /x/
+RUN rm /x/u-boot-2019.07.tar.bz2
 
 #### SoC Scripts ####
 RUN mkdir -p /x/scripts/soc
