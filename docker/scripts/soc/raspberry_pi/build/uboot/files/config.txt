@@ -3,8 +3,8 @@
 # Kernel to boot: u-boot.bin
 kernel=u-boot.bin
 
-# Ensure HDMI output
-hdmi_safe=1
-
 # Enable 64-Bit UBoot by releasing the processor from reset
 arm_control=0x200
+
+# Enable uart 
+enable_uart=1
