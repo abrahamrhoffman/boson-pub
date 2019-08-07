@@ -62,3 +62,6 @@ max_framebuffers=2
 
 [all]
 #dtoverlay=vc4-fkms-v3d
+
+#### Boson Settings ####
+kernel=u-boot.bin
